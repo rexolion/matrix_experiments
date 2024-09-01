@@ -158,7 +158,7 @@ void sinvader3a()
 {
   for (int i = 0; i < 8; i++)
   {
-    lc.setRow(2, i, invader1a[i]);
+    lc.setRow(2, i, invader3a[i]);
   }
 }
 
@@ -166,7 +166,7 @@ void sinvader3b()
 {
   for (int i = 0; i < 8; i++)
   {
-    lc.setRow(2, i, invader1b[i]);
+    lc.setRow(2, i, invader3b[i]);
   }
 }
 
@@ -174,7 +174,7 @@ void sinvader4a()
 {
   for (int i = 0; i < 8; i++)
   {
-    lc.setRow(3, i, invader2a[i]);
+    lc.setRow(3, i, invader4a[i]);
   }
 }
 
@@ -182,7 +182,7 @@ void sinvader4b()
 {
   for (int i = 0; i < 8; i++)
   {
-    lc.setRow(3, i, invader2b[i]);
+    lc.setRow(3, i, invader4b[i]);
   }
 }
 
