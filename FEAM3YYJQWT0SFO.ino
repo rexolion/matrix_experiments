@@ -219,27 +219,27 @@ void loop()
   Serial.println("sample:");
   Serial.println(sample);
 
-  // Put #1 frame on both Display
-  sinvader1a();
-  delay(delayTime);
+  // // Put #1 frame on both Display
+  // sinvader1a();
+  // delay(delayTime);
   sinvader2a();
-  delay(delayTime);
+  // delay(delayTime);
 
-  // Put #2 frame on both Display
-  sinvader1b();
-  delay(delayTime);
+  // // Put #2 frame on both Display
+  // sinvader1b();
+  // delay(delayTime);
   sinvader2b();
-  delay(delayTime);
+  // delay(delayTime);
 
-  // Put #3 frame on both Display
-  sinvader3a();
-  delay(delayTime);
+  // // Put #3 frame on both Display
+  // sinvader3a();
+  // delay(delayTime);
   sinvader4a();
-  delay(delayTime);
+  // delay(delayTime);
 
-  // Put #4 frame on both Display
-  sinvader3b();
-  delay(delayTime);
+  // // Put #4 frame on both Display
+  // sinvader3b();
+  // delay(delayTime);
   sinvader4b();
-  delay(delayTime);
+  // delay(delayTime);
 }
