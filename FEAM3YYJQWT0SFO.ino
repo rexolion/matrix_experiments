@@ -1,17 +1,24 @@
 #include "LedControl.h"
 #include <DHT.h>
 
-#define DHTPIN 2 // Digital pin connected to the DHT sensor
+#define MIC_PIN A1 // Microphone is attached to this analog pin
+#define DHTPIN 2   // Digital pin connected to the DHT sensor
 // Feather HUZZAH ESP8266 note: use pins 3, 4, 5, 12, 13 or 14 --
 // Pin 15 can work but DHT must be disconnected during program upload.
 
 // Uncomment whatever type you're using!
 // #define DHTTYPE DHT11   // DHT 11
 #define DHTTYPE DHT22 // DHT 22  (AM2302), AM2321
+
 // #define DHTTYPE DHT21   // DHT 21 (AM2301)
 LedControl lc = LedControl(11, 13, 10, 4); // Pins: DIN,CLK,CS, # of Display connected
+#define INPUT_FLOOR 10                     // Lower range of analogRead input
+#define INPUT_CEILING 300                  // Max range of analogRead input, the lower the value the more sensitive (1023 = max)
+#define SAMPLE_WINDOW 10                   // Sample window for average level
 
 unsigned long delayTime = 200; // Delay between Frames
+unsigned int sample;
+byte peak = 16; // Peak level of column; used for falling dots
 
 // Put values in arrays
 byte invader1a[] = {
@@ -188,6 +195,34 @@ void sinvader4b()
 
 void loop()
 {
+  unsigned long startMillis = millis(); // Start of sample window
+  float peakToPeak = 0;                 // peak-to-peak level
+
+  unsigned int signalMax = 0;
+  unsigned int signalMin = 1023;
+  unsigned int c, y;
+
+  // collect data for length of sample window (in mS)
+  while (millis() - startMillis < SAMPLE_WINDOW)
+  {
+    sample = analogRead(MIC_PIN);
+    if (sample < 1024) // toss out spurious readings
+    {
+      if (sample > signalMax)
+      {
+        signalMax = sample; // save just the max levels
+      }
+      else if (sample < signalMin)
+      {
+        signalMin = sample; // save just the min levels
+      }
+    }
+  }
+
+  peakToPeak = signalMax - signalMin; // max - min = peak-peak amplitude
+
+  Serial.println(peakToPeak);
+
   // Put #1 frame on both Display
   sinvader1a();
   delay(delayTime);
