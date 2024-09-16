@@ -11,93 +11,48 @@ unsigned long delayTime = 200; // Delay between Frames
 unsigned int sample;
 byte peak = 16; // Peak level of column; used for falling dots
 
-// Put values in arrays
-byte invader1a[] = {
-    B01100111,
-    B01101110,
-    B01111100,
-    B01111000,
-    B01111000,
-    B01101100,
-    B01100110,
-    B01100011,
-};
-
-byte invader1b[] = {
+byte lowestValueMatrixState[] = {
     B00000000,
-    B01100110,
-    B10011001,
-    B10000001,
-    B10000001,
-    B01000010,
-    B00100100,
-    B00011000,
-};
-
-byte invader2a[] = {
-    B00111100,
-    B01000010,
-    B10000001,
-    B10000001,
-    B10000001,
-    B10000001,
-    B01000010,
-    B00111100,
-};
-
-byte invader2b[] = {
     B00000000,
-    B01100110,
-    B10011001,
-    B10000001,
-    B10000001,
-    B01000010,
-    B00100100,
+    B00000000,
     B00011000,
+    B00011000,
+    B00000000,
+    B00000000,
+    B00000000,
 };
 
-byte invader3a[] = {
+byte lowValueMatrixState[] = {
+    B00000000,
+    B00000000,
+    B00111100,
+    B00111100,
+    B00111100,
+    B00111100,
+    B00000000,
+    B00000000,
+};
+
+byte mediumValueMatrixState[] = {
+    B00000000,
+    B01111110,
+    B01111110,
+    B01111110,
+    B01111110,
+    B01111110,
+    B01111110,
+    B00000000,
+};
+
+byte maxValueMatrixState[] = {
     B11111111,
     B11111111,
-    B00011000,
-    B00011000,
-    B00011000,
-    B00011000,
-    B00011000,
-    B00011000,
-};
-
-byte invader3b[] = {
-    B00000000,
-    B01100110,
-    B10011001,
-    B10000001,
-    B10000001,
-    B01000010,
-    B00100100,
-    B00011000,
-};
-
-byte invader4a[] = {
-    B00011111,
-    B00100011,
-    B01000011,
-    B01000011,
-    B00111111,
-    B00011111,
-    B00110011,
-    B01100011,
-};
-
-byte invader4b[] = {
-    B00000000,
-    B01100110,
-    B10011001,
-    B10000001,
-    B10000001,
-    B01000010,
-    B00100100,
-    B00011000,
+    B11111111,
+    B11111111,
+    B11111111,
+    B11111111,
+    B11111111,
+    B11111111,
 };
 
 void setup()
@@ -117,68 +72,47 @@ void setup()
   lc.clearDisplay(3);
 }
 
-//  Take values in Arrays and Display them
-void sinvader1a()
+void sLowestState3()
 {
   for (int i = 0; i < 8; i++)
   {
-    lc.setRow(3, i, invader1a[i]);
+    lc.setRow(0, i, lowestValueMatrixState[i]);
+    lc.setRow(1, i, lowestValueMatrixState[i]);
+    lc.setRow(2, i, lowestValueMatrixState[i]);
+    lc.setRow(3, i, lowestValueMatrixState[i]);
   }
 }
 
-void sinvader1b()
+void sLowState3()
 {
   for (int i = 0; i < 8; i++)
   {
-    lc.setRow(3, i, invader1b[i]);
+    lc.setRow(0, i, lowValueMatrixState[i]);
+    lc.setRow(1, i, lowValueMatrixState[i]);
+    lc.setRow(2, i, lowValueMatrixState[i]);
+    lc.setRow(3, i, lowValueMatrixState[i]);
   }
 }
 
-void sinvader2a()
+void sMediumState3()
 {
   for (int i = 0; i < 8; i++)
   {
-    lc.setRow(2, i, invader2a[i]);
+    lc.setRow(0, i, mediumValueMatrixState[i]);
+    lc.setRow(1, i, mediumValueMatrixState[i]);
+    lc.setRow(2, i, mediumValueMatrixState[i]);
+    lc.setRow(3, i, mediumValueMatrixState[i]);
   }
 }
 
-void sinvader2b()
+void sMaxState3()
 {
   for (int i = 0; i < 8; i++)
   {
-    lc.setRow(2, i, invader2b[i]);
-  }
-}
-
-void sinvader3a()
-{
-  for (int i = 0; i < 8; i++)
-  {
-    lc.setRow(1, i, invader3a[i]);
-  }
-}
-
-void sinvader3b()
-{
-  for (int i = 0; i < 8; i++)
-  {
-    lc.setRow(1, i, invader3b[i]);
-  }
-}
-
-void sinvader4a()
-{
-  for (int i = 0; i < 8; i++)
-  {
-    lc.setRow(0, i, invader4a[i]);
-  }
-}
-
-void sinvader4b()
-{
-  for (int i = 0; i < 8; i++)
-  {
-    lc.setRow(0, i, invader4b[i]);
+    lc.setRow(0, i, maxValueMatrixState[i]);
+    lc.setRow(1, i, maxValueMatrixState[i]);
+    lc.setRow(2, i, maxValueMatrixState[i]);
+    lc.setRow(3, i, maxValueMatrixState[i]);
   }
 }
 
@@ -218,27 +152,20 @@ void loop()
   Serial.print(",");
   Serial.println(sample);
 
-  // // Put #1 frame on both Display
-  // sinvader1a();
-  // delay(delayTime);
-  // sinvader2a();
-  // delay(delayTime);
-
-  // // Put #2 frame on both Display
-  // sinvader1b();
-  // delay(delayTime);
-  // sinvader2b();
-  // delay(delayTime);
-
-  // // Put #3 frame on both Display
-  // sinvader3a();
-  // delay(delayTime);
-  // sinvader4a();
-  // delay(delayTime);
-
-  // // Put #4 frame on both Display
-  // sinvader3b();
-  // delay(delayTime);
-  // sinvader4b();
-  // delay(delayTime);
+  if (peakToPeak >= 250)
+  {
+    sMaxState3();
+  }
+  else if (peakToPeak >= 200)
+  {
+    sMediumState3();
+  }
+  else if (peakToPeak >= 150)
+  {
+    sLowState3();
+  }
+  else if (peakToPeak <= 100)
+  {
+    sLowestState3();
+  }
 }
