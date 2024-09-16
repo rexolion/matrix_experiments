@@ -216,6 +216,8 @@ void loop()
   Serial.println(signalMin);
   Serial.println("signalMax:");
   Serial.println(signalMax);
+  Serial.println("sample:");
+  Serial.println(sample);
 
   // Put #1 frame on both Display
   sinvader1a();
