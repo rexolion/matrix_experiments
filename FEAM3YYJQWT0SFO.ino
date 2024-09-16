@@ -210,7 +210,9 @@ void loop()
 
   peakToPeak = signalMax - signalMin; // max - min = peak-peak amplitude
 
-  Serial.println(peakToPeak);
+  Serial.println("peakToPeak:" + peakToPeak);
+  Serial.println("signalMin:" + signalMin);
+  Serial.println("signalMax:" + signalMax);
 
   // Put #1 frame on both Display
   sinvader1a();
