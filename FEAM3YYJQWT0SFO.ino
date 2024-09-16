@@ -210,36 +210,35 @@ void loop()
 
   peakToPeak = signalMax - signalMin; // max - min = peak-peak amplitude
 
-  Serial.println("peakToPeak:");
-  Serial.println(peakToPeak);
-  Serial.println("signalMin:");
-  Serial.println(signalMin);
-  Serial.println("signalMax:");
-  Serial.println(signalMax);
-  Serial.println("sample:");
+  Serial.print(peakToPeak);
+  Serial.print(",");
+  Serial.print(signalMin);
+  Serial.print(",");
+  Serial.print(signalMax);
+  Serial.print(",");
   Serial.println(sample);
 
   // // Put #1 frame on both Display
   // sinvader1a();
   // delay(delayTime);
-  sinvader2a();
+  // sinvader2a();
   // delay(delayTime);
 
   // // Put #2 frame on both Display
   // sinvader1b();
   // delay(delayTime);
-  sinvader2b();
+  // sinvader2b();
   // delay(delayTime);
 
   // // Put #3 frame on both Display
   // sinvader3a();
   // delay(delayTime);
-  sinvader4a();
+  // sinvader4a();
   // delay(delayTime);
 
   // // Put #4 frame on both Display
   // sinvader3b();
   // delay(delayTime);
-  sinvader4b();
+  // sinvader4b();
   // delay(delayTime);
 }
