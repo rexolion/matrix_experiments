@@ -13,6 +13,8 @@ LedControl lc = LedControl(11, 13, 10, 4); // Pins: DIN,CLK,CS, # of Display con
 
 unsigned long delayTime = 200; // Delay between Frames
 unsigned int sample;
+long duration;
+int distance;
 byte peak = 16; // Peak level of column; used for falling dots
 
 byte lowestValueMatrixState[] = {
