@@ -1,11 +1,15 @@
 #include "LedControl.h"
 
+#define ULTRASONIC_TRIGGER_PIN 9
+#define ULTRASONIC_ECHO_PIN 6
+
 #define MIC_PIN A1 // Microphone is attached to this analog pin
 
 LedControl lc = LedControl(11, 13, 10, 4); // Pins: DIN,CLK,CS, # of Display connected
-#define INPUT_FLOOR 10                     // Lower range of analogRead input
-#define INPUT_CEILING 300                  // Max range of analogRead input, the lower the value the more sensitive (1023 = max)
-#define SAMPLE_WINDOW 10                   // Sample window for average level
+
+#define INPUT_FLOOR 10    // Lower range of analogRead input
+#define INPUT_CEILING 300 // Max range of analogRead input, the lower the value the more sensitive (1023 = max)
+#define SAMPLE_WINDOW 10  // Sample window for average level
 
 unsigned long delayTime = 200; // Delay between Frames
 unsigned int sample;
@@ -57,8 +61,10 @@ byte maxValueMatrixState[] = {
 
 void setup()
 {
-  Serial.begin(9600);    // Start serial communication
-  lc.shutdown(0, false); // Wake up displays
+  Serial.begin(9600);                      // Start serial communication
+  pinMode(ULTRASONIC_TRIGGER_PIN, OUTPUT); // Sets the trigPin as an Output
+  pinMode(ULTRASONIC_ECHO_PIN, INPUT);     // Sets the echoPin as an Input
+  lc.shutdown(0, false);                   // Wake up displays
   lc.shutdown(1, false);
   lc.shutdown(2, false);
   lc.shutdown(3, false);
@@ -116,6 +122,25 @@ void sMaxState3()
   }
 }
 
+void useUltrasonicSensor()
+{
+  // Clears the trigPin
+  digitalWrite(ULTRASONIC_TRIGGER_PIN, LOW);
+  delayMicroseconds(2);
+  // Sets the ULTRASONIC_TRIGGER_PIN on HIGH state for 10 micro seconds
+  digitalWrite(ULTRASONIC_TRIGGER_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(ULTRASONIC_TRIGGER_PIN, LOW);
+  // Reads the ULTRASONIC_ECHO_PIN, returns the sound wave travel time in microseconds
+  duration = pulseIn(ULTRASONIC_ECHO_PIN, HIGH);
+  // Calculating the distance
+  distance = duration * 0.034 / 2;
+  // Prints the distance on the Serial Monitor
+  Serial.print("Distance: ");
+  Serial.println(distance);
+}
+}
+
 void loop()
 {
   unsigned long startMillis = millis(); // Start of sample window
@@ -144,14 +169,6 @@ void loop()
 
   peakToPeak = signalMax - signalMin; // max - min = peak-peak amplitude
 
-  Serial.print(peakToPeak);
-  Serial.print(",");
-  Serial.print(signalMin);
-  Serial.print(",");
-  Serial.print(signalMax);
-  Serial.print(",");
-  Serial.println(sample);
-
   if (peakToPeak >= 250)
   {
     sMaxState3();
@@ -168,4 +185,6 @@ void loop()
   {
     sLowestState3();
   }
+
+  useUltrasonicSensor();
 }
