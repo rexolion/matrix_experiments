@@ -2,7 +2,10 @@
 
 #define ULTRASONIC_TRIGGER_PIN 9
 #define ULTRASONIC_ECHO_PIN 6
-#define LED_STRIP_SWITCH 4
+#define LED_STRIP_SWITCH 3
+
+int brightness = 0;  // how bright the LED is
+int fadeAmount = 3;  // how many points to fade the LED by
 
 #define MIC_PIN A1  // Microphone is attached to this analog pin
 
@@ -108,6 +111,19 @@ void sMediumState3() {
   }
 }
 
+void fadeLEDStrip() {
+   // set the brightness of pin 9:
+  analogWrite(LED_STRIP_SWITCH, brightness);
+
+  // change the brightness for next time through the loop:
+  brightness = brightness + fadeAmount;
+
+  // reverse the direction of the fading at the ends of the fade:
+  if (brightness <= 0 || brightness >= 255) {
+    fadeAmount = -fadeAmount;
+  }
+}
+
 void sMaxState3() {
   for (int i = 0; i < 8; i++) {
     lc.setRow(0, i, maxValueMatrixState[i]);
@@ -155,19 +171,17 @@ void loop() {
     }
   }
 
+  fadeLEDStrip();
+
   peakToPeak = signalMax - signalMin;  // max - min = peak-peak amplitude
 
   if (peakToPeak >= 250) {
     sMaxState3();
-    digitalWrite(LED_STRIP_SWITCH, HIGH);
   } else if (peakToPeak >= 200) {
-    digitalWrite(LED_STRIP_SWITCH, HIGH);
     sMediumState3();
   } else if (peakToPeak >= 150) {
-    digitalWrite(LED_STRIP_SWITCH, LOW);
     sLowState3();
   } else if (peakToPeak <= 100) {
-    digitalWrite(LED_STRIP_SWITCH, LOW);
     sLowestState3();
   }
 
